@@ -1,4 +1,4 @@
-package io.github.trip.shiv.dailydabba.web.business.request;
+package io.github.trip.shiv.dailydabba.web.business.request.user;
 
 import io.github.trip.shiv.dailydabba.web.entity.User;
 import jakarta.validation.constraints.Email;

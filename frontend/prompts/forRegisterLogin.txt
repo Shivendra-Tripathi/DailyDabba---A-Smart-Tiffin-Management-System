@@ -1,0 +1,793 @@
+
+=====================================================================================
+## TASK CONTEXT AND INSTRUCTIONS
+
+You are going to build the **frontend of an existing full-stack application called DailyDabba**.
+
+The detailed application description, design system, API contracts, validation requirements, architecture requirements, and implementation constraints are provided below this section. **Treat everything in the following prompt as the source of truth.**
+
+Your primary task is to implement **ONLY the Login and Registration functionality** of the application at this stage.
+
+The backend APIs already exist and are implemented using Spring Boot. You must integrate the React frontend with those APIs exactly according to the API contracts provided below. **Do not modify, reinterpret, or invent backend APIs.**
+
+The frontend should be designed as the foundation of a larger application that will eventually contain customer and vendor dashboards, tiffin plans, subscriptions, orders, deliveries, payments, and other functionality. However, **none of those features should be implemented now**.
+
+### How you should approach this task
+
+Think of yourself as both:
+
+1. A **senior frontend engineer** responsible for creating a clean, maintainable architecture.
+2. A **frontend mentor** helping a beginner understand and maintain the project.
+
+Therefore, the implementation should be:
+
+* Modular
+* Reusable
+* Maintainable
+* Scalable
+* Beginner-readable
+* Production-oriented
+* Properly documented where necessary
+
+At the same time, **do not over-engineer the application**. Do not create unnecessary abstractions, design patterns, libraries, hooks, or architectural layers merely to make the project appear sophisticated.
+
+Every abstraction should have a clear purpose.
+
+### Important implementation philosophy
+
+Prefer:
+
+**Simple + modular + reusable + understandable**
+
+over:
+
+**Complex + heavily abstracted + difficult to understand**
+
+The frontend should be easy to extend later using an LLM or by a beginner developer.
+
+### Before implementing
+
+First understand the complete specification below.
+
+Then:
+
+1. Identify the required functionality.
+2. Understand the backend API contracts.
+3. Design the frontend architecture.
+4. Determine the reusable components and services required.
+5. Determine the authentication/JWT flow.
+6. Determine the validation and error-handling strategy.
+7. Implement the Login and Register functionality.
+
+Do not immediately start generating random components before understanding the complete specification.
+
+### Important constraints
+
+* Use **React + Tailwind CSS** as specified.
+* Follow the provided DailyDabba design system consistently.
+* Use the exact API endpoints and request/response structures provided.
+* Do not create mock APIs.
+* Do not hardcode fake authentication responses.
+* Do not implement functionality outside the current scope.
+* Do not expose passwords, JWTs, API keys, or other secrets in logs.
+* Do not put secrets in frontend source code.
+* Do not duplicate API communication logic across pages.
+* Do not duplicate common UI/validation logic unnecessarily.
+* Handle loading, success, validation, network, and backend errors properly.
+* Make the implementation responsive and accessible.
+
+### Important decision-making rule
+
+You have permission to make reasonable design and implementation decisions wherever the specification does not explicitly dictate an approach.
+
+You do **not** need to ask for confirmation for minor UI or architectural decisions.
+
+If there are multiple reasonable approaches, choose the one that provides the best balance of:
+
+**security + simplicity + maintainability + scalability + beginner-friendliness.**
+
+If an architectural or security decision has an important trade-off, briefly explain it before implementing it.
+
+### Output expectation
+
+Do not just dump code.
+
+First explain the proposed architecture and project structure in a concise way.
+
+Then implement the complete solution with:
+
+* File paths
+* Complete file contents
+* Clear explanations of important files
+* Setup instructions
+* Run instructions
+* Authentication flow explanation
+* JWT handling explanation
+* Validation explanation
+* API integration explanation
+* Error-handling explanation
+
+The resulting project should be something I can actually run, understand, maintain, and extend.
+
+**Now carefully read and follow the complete specification below.**
+
+=====================================================================================
+
+YOU HAVE TO CREATE THE FRONTEND (ONLY REGISTER AND LOGIN ) FOR THE APPLICATION DESCRIBED BELOW :
+==============================================================
+APPLICATION DESCRIPTION :
+# DailyDabba — Smart Tiffin Management Service
+
+**DailyDabba** is a smart and user-friendly **Tiffin Management Service** designed to simplify the way customers discover, subscribe to, and manage daily tiffin services while helping tiffin vendors efficiently manage their meals, customers, subscriptions, and deliveries.
+
+The platform brings **tiffin service providers and customers together in a single digital ecosystem**. Customers can explore available tiffin services, view meal plans, compare subscription options, manage their subscriptions, and keep track of their daily meals. Vendors, on the other hand, can use the platform to manage their tiffin offerings, customer subscriptions, orders, and day-to-day operations from one centralized system.
+
+A major goal of DailyDabba is to replace the traditional, largely manual process of managing tiffin services. Many local tiffin businesses still rely on phone calls, WhatsApp messages, notebooks, or spreadsheets to handle subscriptions and customer information. This can make it difficult to keep track of active subscriptions, meal preferences, cancellations, deliveries, and payments. DailyDabba aims to provide a structured digital solution that reduces this complexity.
+
+The application follows a **role-based architecture**, where both customers and vendors are represented as users while their capabilities depend on their role within the platform. Authentication and authorization are handled securely using **JWT-based authentication**, allowing protected resources to be accessed only by authenticated and authorized users.
+
+For customers, DailyDabba can provide features such as **user registration and login, profile management, tiffin service discovery, meal-plan browsing, subscription management, meal scheduling, and order tracking**. The system can help customers manage their daily tiffin requirements without repeatedly communicating with the vendor.
+
+For vendors, the platform provides functionality for **creating and managing tiffin plans, managing customers and subscriptions, handling daily orders, and monitoring their service operations**. This allows vendors to organize their business digitally and maintain better visibility over their customers and daily workload.
+
+The frontend of DailyDabba is designed with a **clean, minimalistic Neomorphic UI**, combining soft shadows, rounded components, and subtle depth while maintaining usability and accessibility. The primary visual palette uses **white, dark grey, and a yellow-green accent**, creating a modern and recognizable identity. The frontend is being developed using **React and Tailwind CSS**.
+
+The backend is built using **Spring Boot**, following a layered architecture that separates controllers, services, repositories, business logic, DTOs, security, and persistence concerns. The application uses **Spring Security and JWT** for authentication and authorization and integrates with a relational database for persistent storage.
+
+Overall, DailyDabba is intended to be more than just an online tiffin ordering system. It is a **digital management platform for the complete tiffin-service lifecycle**, connecting customers and vendors while making everyday tiffin management simpler, more organized, and more efficient.
+
+
+========================================================
+DESIGN STYLE :
+Design the UI for **DailyDabba**, a modern tiffin-management platform, using a **clean, minimalistic, refined neumorphic design system**.
+
+This design specification is GLOBAL and MUST remain consistent across every page, component, modal, form, dashboard, card, navbar, sidebar, authentication screen, and responsive layout generated for the application.
+
+## 1. Overall Visual Direction
+
+Use a **modern, subtle neumorphism style** — soft, tactile, spacious, and professional.
+
+The interface should feel:
+
+* Clean
+* Minimal
+* Calm
+* Premium
+* Friendly
+* Food-service oriented
+* Modern but not futuristic
+* Soft and tactile
+* Easy to scan and use
+
+Avoid excessive decoration, gradients, glassmorphism, excessive borders, strong shadows, visual clutter, and unnecessary animations.
+
+The neumorphism should be **subtle rather than exaggerated**.
+
+The UI should look like a real production SaaS/product interface, not a Dribbble concept.
+
+---
+
+## 2. Color System
+
+Use ONLY this primary color family:
+
+### White
+
+Primary surface/background color.
+
+Use for:
+
+* Main page backgrounds
+* Cards
+* Form containers
+* Panels
+* Modals
+* Navigation surfaces where appropriate
+
+The white should be slightly softened rather than extremely harsh pure white when necessary, but maintain a predominantly white appearance.
+
+### Dark Grey
+
+Use dark grey for:
+
+* Primary text
+* Headings
+* Icons
+* Navigation text
+* Important labels
+* Strong UI emphasis
+
+Prefer dark charcoal/dark grey instead of pure black.
+
+Avoid using pure black unless absolutely necessary.
+
+### Yellow + Green
+
+Use a **yellow-green / fresh food-inspired accent family** for:
+
+* Primary CTA buttons
+* Active navigation states
+* Important highlights
+* Success states
+* Selected states
+* Food-related visual accents
+* Small decorative elements
+
+The yellow and green should feel naturally blended and fresh, inspired by:
+
+* Fresh vegetables
+* Healthy food
+* Warm homemade meals
+
+Do NOT introduce unrelated colors such as blue, purple, pink, red, or orange into the primary visual system.
+
+For warnings/errors, use the minimum necessary semantic variation while keeping the overall UI visually consistent.
+
+---
+
+## 3. Neumorphic Surface System
+
+Use white/light surfaces with **soft dual-direction shadows** to create depth.
+
+Typical neumorphic appearance:
+
+* Soft dark shadow on the lower/right side
+* Soft light highlight on the upper/left side
+* Large blur radius
+* Low opacity
+* No harsh black shadows
+
+Example conceptual Tailwind shadow:
+
+`shadow-[8px_8px_18px_rgba(55,65,81,0.12),-8px_-8px_18px_rgba(255,255,255,0.9)]`
+
+Do not apply extremely strong shadows.
+
+Neumorphism should communicate hierarchy through **light, shadow, spacing, and elevation**, not borders.
+
+Prefer:
+
+* Soft raised cards
+* Soft inset inputs
+* Soft raised buttons
+* Subtle pressed states
+
+Avoid:
+
+* Thick borders
+* Heavy outlines
+* Hard drop shadows
+* Excessive floating elements
+
+---
+
+## 4. Page Background
+
+Use a soft white/off-white background throughout the application.
+
+The page should provide enough contrast for neumorphic surfaces while remaining visually bright and clean.
+
+Use generous whitespace.
+
+Do not fill large areas with dark colors.
+
+Dark grey should primarily be used for typography and selected interface elements.
+
+---
+
+## 5. Typography
+
+Use a clean modern sans-serif font.
+
+Preferred typography characteristics:
+
+* Highly readable
+* Medium letter spacing
+* Clear hierarchy
+* Rounded/modern appearance where possible
+
+Use approximately:
+
+* Large page heading: `text-3xl` to `text-4xl`
+* Section heading: `text-xl` to `text-2xl`
+* Card heading: `text-lg`
+* Body text: `text-sm` to `text-base`
+* Supporting text: `text-xs` to `text-sm`
+
+Headings should use dark grey and strong font weight.
+
+Avoid overly decorative typography.
+
+Do not use serif fonts.
+
+---
+
+## 6. Spacing
+
+Use a generous spacing system.
+
+Prefer:
+
+* `p-6`
+* `p-8`
+* `gap-4`
+* `gap-6`
+* `gap-8`
+* `space-y-6`
+* `space-y-8`
+
+Avoid tightly packed layouts.
+
+The UI should breathe.
+
+Maintain consistent horizontal and vertical rhythm between sections.
+
+---
+
+## 7. Border Radius
+
+Use rounded corners consistently.
+
+Preferred radius:
+
+* Cards: `rounded-2xl`
+* Large containers: `rounded-3xl`
+* Inputs: `rounded-xl`
+* Buttons: `rounded-xl` or `rounded-2xl`
+* Small badges: `rounded-full`
+
+Avoid sharp rectangular components unless required by the content.
+
+Do not use excessively circular UI elements unless they are icons, avatars, or compact controls.
+
+---
+
+## 8. Cards
+
+Cards should be one of the primary building blocks of the application.
+
+Use:
+
+* White/light surface
+* Large rounded corners
+* Soft neumorphic shadow
+* Generous internal padding
+* Clear typography hierarchy
+* Minimal or no borders
+
+Cards should feel slightly elevated from the page.
+
+Use consistent card styling throughout:
+
+`rounded-2xl/3xl + soft neumorphic shadow + white surface`
+
+Do not give every card a different visual style.
+
+---
+
+## 9. Buttons
+
+Buttons should be tactile and minimal.
+
+### Primary Button
+
+Use the yellow-green accent.
+
+Characteristics:
+
+* Rounded
+* Medium-to-bold text
+* Soft raised neumorphic shadow
+* Comfortable horizontal padding
+* Clear hover state
+* Subtle pressed state
+
+Example conceptual appearance:
+
+`bg-lime/yellow-green + rounded-xl + soft shadow`
+
+### Secondary Button
+
+Use white/light background with dark grey text and subtle neumorphic elevation.
+
+### Pressed State
+
+When clicked, simulate a subtle neumorphic inset/pressed effect.
+
+Avoid dramatic transformations.
+
+Button animations should be approximately 150–250ms.
+
+---
+
+## 10. Inputs and Forms
+
+Forms should use **inset neumorphism**.
+
+Inputs should appear slightly pressed into the surface.
+
+Use:
+
+* White/light background
+* Rounded-xl corners
+* Soft inset shadow
+* Dark grey text
+* Muted placeholder text
+* Accent color for focus
+
+Conceptual Tailwind styling:
+
+`shadow-[inset_4px_4px_10px_rgba(55,65,81,0.10),inset_-4px_-4px_10px_rgba(255,255,255,0.9)]`
+
+On focus:
+
+* Slightly strengthen the inset effect
+* Use the yellow-green accent subtly
+* Do not introduce blue focus rings
+
+Labels should remain clearly visible above inputs.
+
+---
+
+## 11. Navigation
+
+The navbar should be minimal and spacious.
+
+Use:
+
+* White/light neumorphic surface
+* Dark grey logo/text
+* Yellow-green accent for active navigation
+* Soft elevation
+* Rounded elements where appropriate
+
+Navigation should not visually dominate the page.
+
+For dashboards, a sidebar may be used when appropriate.
+
+Sidebar:
+
+* Clean white/light surface
+* Soft neumorphic elevation
+* Dark grey navigation text
+* Yellow-green active item
+* Rounded active navigation item
+* Generous spacing
+
+---
+
+## 12. Icons
+
+Use a consistent modern icon library such as **Lucide React**.
+
+Icons should be:
+
+* Simple
+* Minimal
+* Line-based
+* Dark grey by default
+* Yellow-green when active/highlighted
+
+Do not mix multiple icon styles.
+
+Avoid decorative icons that do not provide meaning.
+
+---
+
+## 13. Tables and Data
+
+For dashboard/data-heavy pages:
+
+Keep tables minimal.
+
+Use:
+
+* White/light surfaces
+* Soft rounded container
+* Minimal separators
+* Dark grey text
+* Yellow-green status/accent indicators
+* Comfortable row spacing
+
+Avoid dense enterprise-style tables.
+
+Where appropriate, convert important data into neumorphic cards for mobile layouts.
+
+---
+
+## 14. Status Indicators
+
+Use small, subtle status indicators.
+
+For primary/success states, use the yellow-green family.
+
+Status badges should use:
+
+`rounded-full + subtle tinted background + compact typography`
+
+Do not make badges visually dominant.
+
+---
+
+## 15. Modals and Dialogs
+
+Modals should maintain the same neumorphic design language.
+
+Use:
+
+* White/light surface
+* Large rounded corners
+* Soft elevated shadow
+* Generous padding
+* Dark grey typography
+* Yellow-green primary CTA
+
+Avoid dark modal backgrounds unless specifically required.
+
+---
+
+## 16. Dashboard Design
+
+Dashboards should prioritize information hierarchy.
+
+Use:
+
+1. Page heading
+2. Short contextual description
+3. Important summary/stat cards
+4. Primary actions
+5. Main data/content
+6. Secondary information
+
+Stat cards should use subtle neumorphism and contain:
+
+* Small label
+* Large numerical/value text
+* Supporting information
+* Optional minimal icon
+
+Do not overcrowd dashboards with too many cards.
+
+---
+
+## 17. Food/Tiffin Visual Language
+
+DailyDabba is a tiffin/food-management platform.
+
+The visual identity should subtly communicate:
+
+* Homemade food
+* Freshness
+* Reliability
+* Daily routine
+* Healthy meals
+* Convenience
+
+Use food-related imagery sparingly.
+
+Images should feel natural, warm, clean, and authentic.
+
+Do not turn the interface into a restaurant/food-delivery marketplace aesthetic.
+
+The application should still feel like a **management platform**.
+
+---
+
+## 18. Animation
+
+Animations should be subtle and functional.
+
+Use:
+
+* `transition-all`
+* `duration-200`
+* Small hover elevation changes
+* Subtle button press effects
+* Smooth modal appearance
+* Gentle navigation transitions
+
+Avoid:
+
+* Excessive bouncing
+* Large scaling
+* Continuous animations
+* Distracting parallax
+* Overly animated backgrounds
+
+The UI should feel calm.
+
+---
+
+## 19. Responsive Design
+
+The application MUST be fully responsive.
+
+Design for:
+
+* Mobile
+* Tablet
+* Desktop
+* Large desktop
+
+Use Tailwind responsive utilities.
+
+On mobile:
+
+* Reduce horizontal padding
+* Stack cards vertically
+* Convert tables into cards when necessary
+* Collapse desktop navigation appropriately
+* Maintain comfortable touch targets
+* Preserve neumorphic styling
+* Never allow content to overflow horizontally
+
+Desktop layouts should use whitespace rather than stretching content excessively.
+
+---
+
+## 20. Accessibility
+
+Maintain good accessibility despite the neumorphic style.
+
+Ensure:
+
+* Sufficient text contrast
+* Clearly identifiable interactive elements
+* Visible focus states
+* Touch-friendly controls
+* Semantic HTML
+* Proper labels for inputs
+* Accessible buttons and navigation
+
+Neumorphism must never make an element difficult to identify or use.
+
+---
+
+## 21. Tailwind CSS + React Implementation
+
+The UI will be implemented using:
+
+* React
+* Tailwind CSS
+* Lucide React icons
+
+Prefer reusable React components.
+
+Create consistent reusable components such as:
+
+* Button
+* Input
+* Select
+* Card
+* Badge
+* Modal
+* Navbar
+* Sidebar
+* Avatar
+* StatCard
+* EmptyState
+* LoadingState
+
+Do not create completely different styling for individual pages.
+
+Reuse the same design tokens and component patterns across the application.
+
+---
+
+## 22. Design Consistency Rules
+
+These rules have the highest priority:
+
+1. Maintain the same color palette across every page.
+2. Maintain the same neumorphic shadow language.
+3. Maintain consistent border radius.
+4. Maintain consistent typography hierarchy.
+5. Maintain consistent spacing.
+6. Maintain consistent button styles.
+7. Maintain consistent form/input styling.
+8. Maintain consistent navigation.
+9. Maintain consistent responsive behavior.
+10. Do not introduce new visual styles without a strong functional reason.
+
+Every newly generated page should look like it belongs to the **same application and design system** as all previously generated DailyDabba pages.
+
+---
+
+## 23. Avoid
+
+DO NOT use:
+
+* Glassmorphism
+* Dark-mode-first design
+* Neon colors
+* Purple/blue gradients
+* Excessive gradients
+* Excessive shadows
+* Heavy borders
+* Pure black backgrounds
+* Excessive illustrations
+* Cluttered dashboards
+* Excessive animations
+* Random colors
+* Random typography
+* Inconsistent border radii
+* Different button styles on different pages
+* Different card styles on different pages
+* Generic Bootstrap-like layouts
+
+The final result should be **minimal, elegant, tactile, spacious, and production-ready**.
+
+### Core Visual Principle
+
+**White surfaces + dark grey typography + fresh yellow-green accents + subtle neumorphic depth + generous whitespace.**
+
+Every page should feel like a natural continuation of the same **DailyDabba design system**.
+
+===================================================
+WHAT YOU HAVE TO DO : -
+1) Create a highly modular , scalable, maintainable project structure .
+2) You can create the essential cards,hooks and other things.
+3) You have to design only register and login page for now .
+4) Ensure frontend validation check for email,password as neccessity.
+4) You also have to make the proper request to the apis , i will describe below.
+====================================================
+Note : - I AM A VERY BEGGINER TO FRONTEND DEVELOPMENT , SO CREATE THE THINGS VERY MODULAR ,WITH
+PROPER COMMENTS , SO THAT I CAN MAINTIAN IT ,AND USE LLM TO IMPROVE AND EXPAND ITS FUNCTIONALITIES
+====================================================
+TECH STACK TO USE :
+1) REACT JS
+2) Tailwind CSS
+===================================================
+
+
+API REQUEST RESPONSE FORMAT :
+    1) FOR REGISTER :
+        API : POST http://localhost:8080/api/v1/auth/register
+        REQUEST BODY : Mutipart form data with two fields : "request","image"
+        "request" represents the information about the User to be created.
+        * The request field must be explicitly application/json.
+        Sample "request" fields value to create a new user :
+        {
+          "fullName": "Rahul Sharma",
+          "phoneNumber": "9876543210",
+          "email": "rahul.sharma@example.com",
+          "password": "Rahul@12345",
+          "role": "CUSTOMER"
+        }
+
+        "image" , it must be MultipartFile that is an image for profile picture of user.
+
+        RESPONSE FORMAT :
+        {
+            "id": "a34cc823-fc9c-4174-86df-901ae151a49a",
+            "fullName": "Rahul Sharma",
+            "phoneNumber": "9876543210",
+            "email": "rahul.sharma@example.com",
+            "role": "CUSTOMER",
+            "phoneVerified": false,
+            "emailVerified": false,
+            "enabled": true,
+            "createdAt": "2026-09-28T17:01:08.229268600Z",
+            "updatedAt": "2026-09-28T17:01:08.229268600Z"
+        }
+
+    2) FOR Login :
+        API : POST http://localhost:8080/api/v1/auth/login
+        REQUEST BODY(sample) : {
+                                   "email": "rahul.sharma@example.com",
+                                   "password": "Rahul@12345"
+                               }
+        RESPONSE FORMAT(sample) :{
+                                     "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyYWh1bC5zaGFybWFAZXhhbXBsZS5jb20iLCJpYXQiOjE3OTA2MTM2MzgsImV4cCI6MTc5MDYxNTQzOH0.2ACkmYYgzGKT3VH7mB2Yj4yy5khnSc1Z4cb2xq69w19KIMrBnNGyr-p6OLJ4MH8aUd6aJRYmg-BRup_6TMDPKw",
+                                     "tokenType": "Bearer"
+                                 }
+        NOTE : AFTER LOGIN THE JWT TOKEN MUST BE STORED IN A SECURE STORAGE IN FRONTEND.
+==========================================================
+You must create the cards , components to display the neccessary message.
+NOTE : - YOU MUST ACT AS A COMPANION AND HAVE THE POWER TO MAKE ANY DESIGN DECISION
+You can ask for additional details.
+
+
+VERY IMPORTANT : MAKE THE COMPONENTS HIGHLY MODULAR AND SCALABLE.
+
+

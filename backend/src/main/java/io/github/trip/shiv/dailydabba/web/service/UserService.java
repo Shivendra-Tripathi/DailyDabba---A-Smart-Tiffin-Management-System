@@ -1,29 +1,39 @@
 package io.github.trip.shiv.dailydabba.web.service;
 
-import io.github.trip.shiv.dailydabba.web.business.request.CreateUserRequest;
+import io.github.trip.shiv.dailydabba.web.business.request.user.CreateUserRequest;
 
-import io.github.trip.shiv.dailydabba.web.business.request.UpdateUserRequest;
-import io.github.trip.shiv.dailydabba.web.business.response.internal.UserResponseInternal;
+import io.github.trip.shiv.dailydabba.web.business.request.user.UpdateUserRequest;
+import io.github.trip.shiv.dailydabba.web.business.response.user.UserResponse;
+import io.github.trip.shiv.dailydabba.web.entity.User;
 
 import java.util.UUID;
 
 
 public interface UserService {
 
+
+    /**
+     * To get the actual User entity
+     */
+    User getUserEntityByEmail(String email);
+    User getUserEntityById(UUID id);
+
     /**
      * Creates a new user account.
      */
-    UserResponseInternal createUser(CreateUserRequest request);
+    UserResponse createUser(CreateUserRequest request);
 
     /**
      * Retrieves a user by their unique identifier.
      */
-    UserResponseInternal getUserById(UUID userId);
+    UserResponse getUserById(UUID userId);
 
     /**
      * Retrieves a user by their email address.
      */
-    UserResponseInternal getUserByEmail(String email);
+    UserResponse getUserByEmail(String email);
+
+
 
     /**
      * Checks whether a user with the given email already exists.
@@ -33,7 +43,7 @@ public interface UserService {
     /**
      * Updates common user/account information.
      */
-    UserResponseInternal updateUser(UUID userId, UpdateUserRequest request);
+    UserResponse updateUser(UUID userId, UpdateUserRequest request);
 
     /**
      * Changes the user's password.

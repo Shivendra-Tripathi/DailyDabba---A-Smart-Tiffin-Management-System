@@ -1,4 +1,4 @@
-package io.github.trip.shiv.dailydabba.web.configuration;
+package io.github.trip.shiv.dailydabba.web.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

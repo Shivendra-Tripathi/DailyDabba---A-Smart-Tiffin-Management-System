@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-surface font-sans text-ink antialiased; }
+  /* Visible keyboard focus everywhere (accessibility) */
+  :focus-visible { @apply outline-2 outline-offset-2 outline-lime-600; }
+}

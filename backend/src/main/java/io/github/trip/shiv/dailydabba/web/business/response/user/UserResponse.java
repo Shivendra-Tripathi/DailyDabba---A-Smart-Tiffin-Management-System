@@ -1,5 +1,5 @@
 
-package io.github.trip.shiv.dailydabba.web.business.response.internal;
+package io.github.trip.shiv.dailydabba.web.business.response.user;
 
 import io.github.trip.shiv.dailydabba.web.entity.User;
 import io.github.trip.shiv.dailydabba.web.entity.enums.Role;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserResponseInternal {
+public class UserResponse {
 
     private UUID id;
 
@@ -39,12 +39,12 @@ public class UserResponseInternal {
 
     private Instant updatedAt;
 
-    public static UserResponseInternal from(User user) {
+    public static UserResponse from(User user) {
         if (user == null) {
             return null;
         }
 
-        return UserResponseInternal.builder()
+        return UserResponse.builder()
                 .id(user.getId())
                 .fullName(user.getFullName())
                 .phoneNumber(user.getPhoneNumber())

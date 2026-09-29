@@ -64,4 +64,10 @@ public class User extends BaseEntity {
     /** Push token for order/poll/consent notifications. */
     @Column(name = "fcm_token")
     private String fcmToken;
+
+
+    /* Stores the url of the profile picture */
+    @Column(name = "profile_picture_url" , nullable = true)
+    private String profilePictureUrl ;
+
 }
