@@ -4,11 +4,15 @@ import io.github.trip.shiv.dailydabba.web.entity.User;
 import io.github.trip.shiv.dailydabba.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,7 +41,10 @@ public class CustomUserDetailsService
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPasswordHash())
-                .roles(user.getRole().name())
+                .authorities(List.of(
+                        new SimpleGrantedAuthority("ROLE_" + user.getRole().name())
+                ))
                 .build();
     }
+
 }

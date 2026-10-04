@@ -57,7 +57,7 @@ public class DailyMenu extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "menu_item_id")
     )
     @Builder.Default
-    private Set<MenuItem> items = new HashSet<>();
+    private Set<MealItem> items = new HashSet<>();
 
     /** Flips true once the vendor's order cutoff time passes for this date/slot. */
     @Builder.Default

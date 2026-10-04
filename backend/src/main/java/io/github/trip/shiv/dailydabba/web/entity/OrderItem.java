@@ -29,7 +29,7 @@ public class OrderItem extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "menu_item_id", nullable = false)
-    private MenuItem menuItem;
+    private MealItem menuItem;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;

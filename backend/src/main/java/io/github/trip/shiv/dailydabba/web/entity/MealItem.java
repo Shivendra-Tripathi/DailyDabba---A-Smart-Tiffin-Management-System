@@ -2,14 +2,7 @@ package io.github.trip.shiv.dailydabba.web.entity;
 
 import io.github.trip.shiv.dailydabba.web.entity.enums.DietType;
 import io.github.trip.shiv.dailydabba.web.entity.enums.MealType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,8 +22,16 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "menu_items")
-public class MenuItem extends BaseEntity {
+@Table(
+        name = "meal_items",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_meal_item_vendor_name",
+                        columnNames = {"vendor_id", "name"}
+                )
+        }
+)
+public class MealItem extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "vendor_id", nullable = false)
@@ -41,10 +42,6 @@ public class MenuItem extends BaseEntity {
 
     @Column(name = "description", length = 500)
     private String description;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "meal_type", nullable = false, length = 20)
-    private MealType mealType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "diet_type", nullable = false, length = 20)

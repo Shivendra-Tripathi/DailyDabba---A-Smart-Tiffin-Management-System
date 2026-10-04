@@ -29,7 +29,7 @@ public class PollOption extends BaseEntity {
     /** The candidate meal being voted on - reuses the vendor's existing catalog item. */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "menu_item_id", nullable = false)
-    private MenuItem menuItem;
+    private MealItem menuItem;
 
     /** Denormalized counter, kept in sync as PollVote rows are inserted, for fast reads. */
     @Builder.Default

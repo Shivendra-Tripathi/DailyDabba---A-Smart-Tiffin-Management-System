@@ -3,6 +3,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
+import VendorProfilePage from "./pages/VendorProfilePage";
+import EditVendorProfilePage from "./pages/EditVendorProfilePage";
 import { ProtectedRoute, PublicOnlyRoute } from "./components/routing/RouteGuards";
 
 export default function App() {
@@ -11,6 +13,8 @@ export default function App() {
       <Route path="/login" element={<PublicOnlyRoute><LoginPage /></PublicOnlyRoute>} />
       <Route path="/register" element={<PublicOnlyRoute><RegisterPage /></PublicOnlyRoute>} />
       <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+      <Route path="/vendor/profile" element={<ProtectedRoute><VendorProfilePage /></ProtectedRoute>} />
+      <Route path="/vendor/profile/edit" element={<ProtectedRoute><EditVendorProfilePage /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );

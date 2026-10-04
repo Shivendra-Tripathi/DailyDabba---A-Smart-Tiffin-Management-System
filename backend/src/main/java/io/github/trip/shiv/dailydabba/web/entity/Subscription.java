@@ -78,7 +78,7 @@ public class Subscription extends BaseEntity {
     /** Fallback meal used when no poll result / explicit item choice is available. */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "preferred_menu_item_id")
-    private MenuItem preferredMenuItem;
+    private MealItem preferredMenuItem;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default

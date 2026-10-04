@@ -43,10 +43,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String authorizationHeader =
                 request.getHeader("Authorization");
 
-        /*
-         * No Authorization header or not a Bearer token.
-         * Let the request continue.
-         */
+        logger.info("Authorization header present: {}",
+                authorizationHeader != null);
+
         if (authorizationHeader == null ||
                 !authorizationHeader.startsWith("Bearer ")) {
 
@@ -60,10 +59,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             String email = jwtService.extractUsername(token);
 
-            /*
-             * Only authenticate if SecurityContext does not
-             * already contain an authenticated user.
-             */
+            logger.info("Username extracted from JWT: {}", email);
+
             if (email != null &&
                     SecurityContextHolder.getContext()
                             .getAuthentication() == null) {
@@ -71,7 +68,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UserDetails userDetails =
                         userDetailsService.loadUserByUsername(email);
 
-                if (jwtService.isTokenValid(token, userDetails)) {
+                logger.info("User loaded: {}", userDetails.getUsername());
+
+                boolean valid =
+                        jwtService.isTokenValid(token, userDetails);
+
+                logger.info("JWT valid: {}", valid);
+
+                if (valid) {
 
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
@@ -87,16 +91,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder.getContext()
                             .setAuthentication(authentication);
+
+                    logger.info(
+                            "Authentication set: {}",
+                            SecurityContextHolder.getContext()
+                                    .getAuthentication()
+                    );
                 }
             }
 
-        } catch (Exception ignored) {
-            /*
-             * Invalid JWT should not authenticate the request.
-             * Spring Security will subsequently reject the request
-             * if the endpoint requires authentication.
-             */
-            logger.info("Got a request that requires an authentication but has invalid token");
+        } catch (Exception e) {
+            logger.error("JWT authentication failed", e);
         }
 
         filterChain.doFilter(request, response);

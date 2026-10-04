@@ -27,6 +27,9 @@ public class AuthController {
             @Valid @RequestPart("request") CreateUserRequest request,
             @RequestPart(value = "profileImage", required = false) MultipartFile image ) {
 
+
+        //TODO : Image uploading ans setting the URL in request is done to be here.
+
         UserResponse response = authService.register(request);
 
         return ResponseEntity

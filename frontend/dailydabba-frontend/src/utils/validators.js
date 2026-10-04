@@ -29,12 +29,32 @@ const phoneNumber = (v) =>
   !v ? "Enter your phone number." : !/^[6-9]\d{9}$/.test(v) ? "Enter a 10-digit mobile number starting with 6-9." : "";
 
 const image = (file) =>
-  !file ? "Add a profile picture."
+  !file ? ""
   : !file.type.startsWith("image/") ? "Choose an image file (JPG, PNG or WebP)."
   : file.size > MAX_IMAGE_MB * 1024 * 1024 ? `Image must be smaller than ${MAX_IMAGE_MB} MB.` : "";
 
 // Keeps only the fields that have an error message.
 const onlyErrors = (obj) => Object.fromEntries(Object.entries(obj).filter(([, msg]) => msg));
+
+const optionalImage = (file) =>
+  !file ? ""
+  : !file.type.startsWith("image/") ? "Choose an image file (JPG, PNG or WebP)."
+  : file.size > MAX_IMAGE_MB * 1024 * 1024 ? `Image must be smaller than ${MAX_IMAGE_MB} MB.` : "";
+
+export const validateVendorProfile = (v) =>
+  onlyErrors({
+    businessName: !v.businessName.trim() ? "Enter your business name." : "",
+    description: !v.description.trim() ? "Enter a description of your business." : "",
+    "businessAddress.line1": !v["businessAddress.line1"].trim() ? "Enter the street address." : "",
+    "businessAddress.city": !v["businessAddress.city"].trim() ? "Enter the city." : "",
+    "businessAddress.state": !v["businessAddress.state"].trim() ? "Enter the state." : "",
+    "businessAddress.pincode": !/^\d{6}$/.test(v["businessAddress.pincode"]) ? "Enter a 6-digit PIN code." : "",
+    fssaiLicenseNumber: !/^\d{14}$/.test(v.fssaiLicenseNumber) ? "Enter the 14-digit FSSAI license number." : "",
+    orderCutoffTime: !v.orderCutoffTime ? "Choose an order cutoff time." : "",
+    "businessAddress.latitude": v["businessAddress.latitude"] !== "" && (!Number.isFinite(Number(v["businessAddress.latitude"])) || Number(v["businessAddress.latitude"]) < -90 || Number(v["businessAddress.latitude"]) > 90) ? "Enter a latitude between -90 and 90." : "",
+    "businessAddress.longitude": v["businessAddress.longitude"] !== "" && (!Number.isFinite(Number(v["businessAddress.longitude"])) || Number(v["businessAddress.longitude"]) < -180 || Number(v["businessAddress.longitude"]) > 180) ? "Enter a longitude between -180 and 180." : "",
+    image: optionalImage(v.image),
+  });
 
 export const validateLogin = (v) => onlyErrors({ email: email(v.email), password: requiredPassword(v.password) });
 

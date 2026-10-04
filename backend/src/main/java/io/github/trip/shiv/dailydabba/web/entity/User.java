@@ -67,7 +67,8 @@ public class User extends BaseEntity {
 
 
     /* Stores the url of the profile picture */
+    @Builder.Default
     @Column(name = "profile_picture_url" , nullable = true)
-    private String profilePictureUrl ;
+    private String imageUrl = null;
 
 }

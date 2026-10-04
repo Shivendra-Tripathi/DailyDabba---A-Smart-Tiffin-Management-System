@@ -1,0 +1,20 @@
+Now I want to create a Page for my DailyDabba Application where the Vendor can create,update and delete the MealItems and Meals.
+A vendor refers to the Person who is hosting the Tiffin Service.
+
+==========================================================
+            Important Definitions
+MealItem : It refers to a single item in a tiffin,i.e. Dal,Roti,etc
+Meal : It refers to a set of items that will be in the tiffin . Essentially , a meal refers to a Tiffin.
+==========================================================
+
+==========================================================
+            WHAT I WANT
+I want you to design the Single Page for the Vendor where Vendor can create a new MealItem set its features,
+create a Meal and set what things in the Meal.
+==========================================================
+
+==========================================================
+            Important
+1) You must follow my design principles , the new page must align with the UI style.
+2) You must properly call the backend apis .
+3) You may ask for permissions to read the backend files.

@@ -39,6 +39,8 @@ public class UserResponse {
 
     private Instant updatedAt;
 
+    private String imageUrl;
+
     public static UserResponse from(User user) {
         if (user == null) {
             return null;
@@ -55,6 +57,7 @@ public class UserResponse {
                 .enabled(user.isEnabled())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
+                .imageUrl(user.getImageUrl())
                 .build();
     }
 }

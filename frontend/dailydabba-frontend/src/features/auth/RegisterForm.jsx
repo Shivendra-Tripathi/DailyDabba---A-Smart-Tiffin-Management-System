@@ -49,7 +49,7 @@ export default function RegisterForm() {
         <Input label="Password" icon={Lock} type="password" autoComplete="new-password" placeholder="Create a password" {...field("password")} />
         <Input label="Confirm password" icon={Lock} type="password" autoComplete="new-password" placeholder="Repeat password" {...field("confirmPassword")} />
       </div>
-      <ImageUpload label="Profile picture" file={values.image} error={errors.image}
+      <ImageUpload label="Profile picture (optional)" file={values.image} error={errors.image}
         onChange={(file) => form.setValue("image", file)} onTouched={() => form.touch("image")} />
       <Button type="submit" fullWidth loading={loading}>{loading ? "Creating account" : "Create account"}</Button>
     </form>

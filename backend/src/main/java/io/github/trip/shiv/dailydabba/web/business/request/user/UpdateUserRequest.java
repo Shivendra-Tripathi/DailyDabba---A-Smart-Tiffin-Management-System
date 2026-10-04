@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.URL;
 
 @Getter
 @Setter
@@ -30,6 +31,9 @@ public class UpdateUserRequest {
     @Size(max = 150, message = "Email must not exceed 150 characters")
     private String email;
 
+    @URL(message = "Image url must not be null")
+    private String imageUrl;
+
     public void applyOn(User user) {
         if (fullName != null) {
             user.setFullName(fullName);
@@ -41,6 +45,10 @@ public class UpdateUserRequest {
 
         if (email != null) {
             user.setEmail(email);
+        }
+
+        if(imageUrl != null){
+            user.setImageUrl(imageUrl);
         }
     }
 }

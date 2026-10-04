@@ -2,7 +2,7 @@ import { useEffect, useId, useState } from "react";
 import { ImagePlus, X } from "lucide-react";
 
 // Profile picture picker with preview. `file` is a File object (or null); onChange(file) reports changes.
-export default function ImageUpload({ label, file, onChange, onTouched, error }) {
+export default function ImageUpload({ label, file, onChange, onTouched, error, currentImageUrl }) {
   const id = useId();
   const [previewUrl, setPreviewUrl] = useState(null);
 
@@ -20,13 +20,15 @@ export default function ImageUpload({ label, file, onChange, onTouched, error })
     e.target.value = ""; // allows re-picking the same file
   };
 
+  const imageUrl = previewUrl || currentImageUrl;
+
   return (
     <div>
       <span className="mb-2 block text-sm font-semibold">{label}</span>
       <div className="flex items-center gap-4">
         <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full bg-surface shadow-neu-inset">
-          {previewUrl ? <img src={previewUrl} alt="Profile preview" className="h-full w-full object-cover" />
-                      : <ImagePlus className="h-6 w-6 text-ink-soft" aria-hidden="true" />}
+          {imageUrl ? <img src={imageUrl} alt="Business logo preview" className="h-full w-full object-cover" />
+                    : <ImagePlus className="h-6 w-6 text-ink-soft" aria-hidden="true" />}
         </div>
         <div className="flex flex-wrap gap-3">
           <label htmlFor={id} className="cursor-pointer rounded-xl bg-surface px-4 py-2.5 text-sm font-bold shadow-neu-sm transition-all duration-200 focus-within:outline focus-within:outline-2 focus-within:outline-lime-600 hover:shadow-neu active:shadow-neu-pressed">

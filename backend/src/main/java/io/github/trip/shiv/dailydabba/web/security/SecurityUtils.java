@@ -1,7 +1,10 @@
 package io.github.trip.shiv.dailydabba.web.security;
 
 import io.github.trip.shiv.dailydabba.web.entity.User;
+import io.github.trip.shiv.dailydabba.web.entity.VendorProfile;
+import io.github.trip.shiv.dailydabba.web.entity.enums.Role;
 import io.github.trip.shiv.dailydabba.web.service.UserService;
+import io.github.trip.shiv.dailydabba.web.service.VendorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Component;
 public class SecurityUtils {
 
     private final UserService userService;
+    private final VendorService vendorService;
 
     public User getAuthenticatedUser() {
 
@@ -30,6 +34,17 @@ public class SecurityUtils {
             throw new UsernameNotFoundException("Email not found");
         }
 
-        return userService.getUserEntityByEmail(email);
+        return userService.getUserByEmail(email);
+    }
+
+
+    public VendorProfile getAuthenticatedVendor() {
+        User user = getAuthenticatedUser();
+        //Load the Vendor from Database
+
+        if(user.getRole() != Role.VENDOR){
+            throw new RuntimeException("User is not a Vendor");
+        }
+        return vendorService.getVendorByUserId(user.getId());
     }
 }

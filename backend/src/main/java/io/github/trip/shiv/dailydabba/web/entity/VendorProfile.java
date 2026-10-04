@@ -66,4 +66,9 @@ public class VendorProfile extends BaseEntity {
     @Builder.Default
     @Column(name = "accepting_orders", nullable = false)
     private boolean acceptingOrders = true;
+
+
+    @Builder.Default
+    @Column(name = "business_logo" , nullable = true)
+    private String businessLogoUrl = null;
 }

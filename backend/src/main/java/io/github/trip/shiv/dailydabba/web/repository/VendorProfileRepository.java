@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,11 +32,21 @@ public interface VendorProfileRepository extends JpaRepository<VendorProfile, UU
     Page<VendorProfile> findByAcceptingOrdersTrueAndVerificationStatus(
             VendorVerificationStatus status, Pageable pageable);
 
-    Page<VendorProfile> findByBusinessNameContainingIgnoreCaseAndAcceptingOrdersTrue(
-            String namePart, Pageable pageable);
+    Page<VendorProfile> findByBusinessNameContainingIgnoreCaseAndAcceptingOrdersTrueAndVerificationStatus(
+            String name,
+            VendorVerificationStatus status,
+            Pageable pageable
+    );
 
-    @Query("select v from VendorProfile v where v.acceptingOrders = true " +
-            "and v.verificationStatus = io.github.trip.shiv.dailydabba.web.entity.enums.VendorVerificationStatus.VERIFIED " +
-            "order by v.averageRating desc")
-    List<VendorProfile> findTopRatedVendors(Pageable pageable);
+    @Query("""
+    select v
+    from VendorProfile v
+    where v.acceptingOrders = true
+      and v.verificationStatus = :status
+    order by v.averageRating desc
+    """)
+    Page<VendorProfile> findTopRatedVendors(
+            @Param("status") VendorVerificationStatus status,
+            Pageable pageable
+    );
 }

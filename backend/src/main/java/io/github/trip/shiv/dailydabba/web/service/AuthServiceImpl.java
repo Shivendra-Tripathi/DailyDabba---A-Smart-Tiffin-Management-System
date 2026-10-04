@@ -47,6 +47,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserResponse register(CreateUserRequest request) {
-        return userService.createUser(request);
+        return UserResponse.from(
+                userService.createUser(request));
     }
 }

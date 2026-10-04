@@ -1,6 +1,7 @@
 
 package io.github.trip.shiv.dailydabba.web.business.request.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.trip.shiv.dailydabba.web.entity.User;
 import io.github.trip.shiv.dailydabba.web.entity.enums.Role;
 import jakarta.validation.constraints.Email;
@@ -48,13 +49,17 @@ public class CreateUserRequest {
     @NotNull(message = "Role is required")
     private Role role;
 
-    public User toEntity(String passwordHash) {
+    @JsonIgnore
+    private String imageUrl;
+
+    public User toEntity(String passwordHash ) {
         return User.builder()
                 .fullName(fullName)
                 .phoneNumber(phoneNumber)
                 .email(email)
                 .passwordHash(passwordHash)
                 .role(role)
+                .imageUrl(imageUrl)
                 .build();
     }
 }
