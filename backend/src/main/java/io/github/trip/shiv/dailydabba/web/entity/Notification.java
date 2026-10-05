@@ -44,8 +44,8 @@ public class Notification extends BaseEntity {
     private String message;
 
     @Builder.Default
-    @Column(name = "read", nullable = false)
-    private boolean read = false;
+    @Column(name = "readed", nullable = false)
+    private boolean readed = false;
 
     /** Id of the entity this notification refers to (order, poll, consent request...) for deep-linking. */
     @Column(name = "reference_id")

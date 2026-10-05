@@ -38,24 +38,13 @@ public class UpdateVendorRequest {
      */
     public void applyOn(VendorProfile vendorProfile) {
 
-        if (businessName != null) {
-            vendorProfile.setBusinessName(businessName);
-        }
+        vendorProfile.setBusinessName(businessName);
 
-        if (description != null) {
-            vendorProfile.setDescription(description);
-        }
+        vendorProfile.setDescription(description);
+        vendorProfile.setBusinessAddress(businessAddress);
 
-        if (businessAddress != null) {
-            vendorProfile.setBusinessAddress(businessAddress);
-        }
+        vendorProfile.setFssaiLicenseNumber(fssaiLicenseNumber);
+        vendorProfile.setOrderCutoffTime(orderCutoffTime);
 
-        if (fssaiLicenseNumber != null) {
-            vendorProfile.setFssaiLicenseNumber(fssaiLicenseNumber);
-        }
-
-        if (orderCutoffTime != null) {
-            vendorProfile.setOrderCutoffTime(orderCutoffTime);
-        }
     }
 }

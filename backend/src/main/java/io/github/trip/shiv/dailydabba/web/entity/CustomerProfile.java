@@ -50,9 +50,4 @@ public class CustomerProfile extends BaseEntity {
 //    })
     @Embedded
     private Address defaultAddress;
-
-    /** Wallet used for refunds and quick checkout. */
-    @Builder.Default
-    @Column(name = "wallet_balance", precision = 10, scale = 2, nullable = false)
-    private BigDecimal walletBalance = BigDecimal.ZERO;
 }

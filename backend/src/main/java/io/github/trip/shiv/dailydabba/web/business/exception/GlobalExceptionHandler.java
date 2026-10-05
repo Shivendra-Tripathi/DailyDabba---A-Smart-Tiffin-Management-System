@@ -1,6 +1,5 @@
 package io.github.trip.shiv.dailydabba.web.business.exception;
 
-import io.github.trip.shiv.dailydabba.web.business.exception.VendorProfileNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,6 +25,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(VendorProfileNotFoundException.class)
     public ResponseEntity<Void> vendorProfileNotFoundException(VendorProfileNotFoundException e) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler(CustomerProfileNotFoundException.class)
+    public ResponseEntity<Void> customerProfileNotFoundException(CustomerProfileNotFoundException e) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

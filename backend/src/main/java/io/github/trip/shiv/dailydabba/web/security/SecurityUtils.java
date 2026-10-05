@@ -1,12 +1,14 @@
 package io.github.trip.shiv.dailydabba.web.security;
 
+import io.github.trip.shiv.dailydabba.web.entity.CustomerProfile;
 import io.github.trip.shiv.dailydabba.web.entity.User;
 import io.github.trip.shiv.dailydabba.web.entity.VendorProfile;
 import io.github.trip.shiv.dailydabba.web.entity.enums.Role;
+import io.github.trip.shiv.dailydabba.web.service.CustomerService;
 import io.github.trip.shiv.dailydabba.web.service.UserService;
 import io.github.trip.shiv.dailydabba.web.service.VendorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +21,7 @@ public class SecurityUtils {
 
     private final UserService userService;
     private final VendorService vendorService;
+    private final CustomerService customerService;
 
     public User getAuthenticatedUser() {
 
@@ -38,6 +41,7 @@ public class SecurityUtils {
     }
 
 
+    @PreAuthorize("hasRole('VENDOR')")
     public VendorProfile getAuthenticatedVendor() {
         User user = getAuthenticatedUser();
         //Load the Vendor from Database
@@ -47,4 +51,14 @@ public class SecurityUtils {
         }
         return vendorService.getVendorByUserId(user.getId());
     }
+
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public CustomerProfile getAuthenticatedCustomer() {
+        User user = getAuthenticatedUser();
+        if(user.getRole() != Role.CUSTOMER){
+            throw new RuntimeException("User is not a Customer");
+        }
+        return customerService.getCustomerByUserId(user.getId());
+    }
+
 }

@@ -56,6 +56,18 @@ export const validateVendorProfile = (v) =>
     image: optionalImage(v.image),
   });
 
+export const validateCustomerProfile = (v) =>
+  onlyErrors({
+    dietPreference: !v.dietPreference ? "Select your diet preference." : "",
+    "defaultAddress.line1": !v["defaultAddress.line1"]?.trim() ? "Enter your street address." : "",
+    "defaultAddress.city": !v["defaultAddress.city"]?.trim() ? "Enter your city." : "",
+    "defaultAddress.state": !v["defaultAddress.state"]?.trim() ? "Enter your state." : "",
+    "defaultAddress.pincode": !/^\d{6}$/.test(v["defaultAddress.pincode"] || "") ? "Enter a 6-digit PIN code." : "",
+    "defaultAddress.latitude": v["defaultAddress.latitude"] !== "" && v["defaultAddress.latitude"] != null && (!Number.isFinite(Number(v["defaultAddress.latitude"])) || Number(v["defaultAddress.latitude"]) < -90 || Number(v["defaultAddress.latitude"]) > 90) ? "Enter a latitude between -90 and 90." : "",
+    "defaultAddress.longitude": v["defaultAddress.longitude"] !== "" && v["defaultAddress.longitude"] != null && (!Number.isFinite(Number(v["defaultAddress.longitude"])) || Number(v["defaultAddress.longitude"]) < -180 || Number(v["defaultAddress.longitude"]) > 180) ? "Enter a longitude between -180 and 180." : "",
+    image: optionalImage(v.image),
+  });
+
 export const validateLogin = (v) => onlyErrors({ email: email(v.email), password: requiredPassword(v.password) });
 
 export const validateRegister = (v) =>
@@ -67,3 +79,4 @@ export const validateRegister = (v) =>
     confirmPassword: !v.confirmPassword ? "Confirm your password." : v.confirmPassword !== v.password ? "Passwords do not match." : "",
     image: image(v.image),
   });
+

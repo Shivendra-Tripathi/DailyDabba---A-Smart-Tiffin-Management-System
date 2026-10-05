@@ -29,7 +29,7 @@ public class VendorProfileController {
     @PostMapping(
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-//    @PreAuthorize("hasRole('VENDOR')")
+    @PreAuthorize("hasRole('VENDOR')")
     public ResponseEntity<VendorProfileResponse> registerBusiness(
             @Valid @RequestPart("request") CreateVendorRequest request,
             @RequestPart(value = "image" , required = false) MultipartFile logoImage
@@ -58,6 +58,7 @@ public class VendorProfileController {
      * Get the currently authenticated vendor's profile.
      */
     @GetMapping
+    @PreAuthorize("hasRole('VENDOR')")
     public ResponseEntity<VendorProfileResponse> getMyProfile() {
 
         //Get the Authenticated User

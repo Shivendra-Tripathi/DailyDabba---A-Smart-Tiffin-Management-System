@@ -18,3 +18,109 @@ create a Meal and set what things in the Meal.
 1) You must follow my design principles , the new page must align with the UI style.
 2) You must properly call the backend apis .
 3) You may ask for permissions to read the backend files.
+4) You must wire up the things correctly.
+==========================================================
+
+==========================================================
+            UI Architecture
+
+┌─────────────────────────────────────────────────────────────────┐
+│  Meal Catalog                                                   │
+│  Manage your meal items and meals                              │
+│                                                                 │
+│  [ + Create Meal Item ]        [ + Create Meal ]               │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  [ Meal Items ]     [ Meals ]                                  │
+│                                                                 │
+│  ┌───────────────────────────────────────────────────────────┐  │
+│  │                    CONTENT AREA                           │  │
+│  │                                                           │  │
+│  │   Previously created MealItems / Meals                    │  │
+│  │                                                           │  │
+│  │   ┌────────┐  ┌────────┐  ┌────────┐                     │  │
+│  │   │ Image  │  │ Image  │  │ Image  │                     │  │
+│  │   │ Dal    │  │ Roti   │  │ Rice   │                     │  │
+│  │   │ ₹40    │  │ ₹10    │  │ ₹30    │                     │  │
+│  │   │ [Edit] │  │ [Edit] │  │ [Edit] │                     │  │
+│  │   └────────┘  └────────┘  └────────┘                     │  │
+│  │                                                           │  │
+│  │                < 1  2  3  4  >                            │  │
+│  └───────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+
+* Meal Items and Meal must be two tabs , when Vendor clicks on Meal Items , below content area must show the Meal Items
+ and same for  Meal.
+
+
+When Vendor clicks on the Create Meal Item :
+
+UI Shows something like this :
+┌─────────────────────────────────────────────┐
+│ Create Meal Item                         ×  │
+├─────────────────────────────────────────────┤
+│                                             │
+│ Name                                         │
+│ [ Paneer Curry........................... ] │
+│                                             │
+│ Description                                  │
+│ [.........................................] │
+│ [.........................................] │
+│                                             │
+│ Price                                        │
+│ [ ₹ 80.00 ]                                 │
+│                                             │
+│ Image                                        │
+│ ┌─────────────────────────────────────────┐ │
+│ │          Upload Meal Item Image         │ │
+│ │             [ Choose File ]             │ │
+│ └─────────────────────────────────────────┘ │
+│                                             │
+│                         [Cancel] [Create]   │
+└─────────────────────────────────────────────┘
+
+
+
+When Vendor Clicks on Create Meal :
+┌──────────────────────────────────────────────────┐
+│ Create Meal                                   × │
+├──────────────────────────────────────────────────┤
+│                                                  │
+│ Meal Name                                        │
+│ [ Regular Lunch............................... ] │
+│                                                  │
+│ Description                                      │
+│ [..............................................] │
+│                                                  │
+│ Diet Type                                        │
+│ [ VEG ▼ ]                                        │
+│                                                  │
+│ Meal Items                                       │
+│                                                  │
+│ [ Search meal items........................... ] │
+│                                                  │
+│ ☑ Roti                                  ₹10      │
+│ ☑ Dal                                   ₹40      │
+│ ☑ Rice                                  ₹30      │
+│ ☐ Paneer Curry                          ₹80      │
+│ ☑ Salad                                 ₹20      │
+│                                                  │
+│ Selected: 4 items                                │
+│                                                  │
+│ Image                                             │
+│ [ Choose File ]                                  │
+│                                                  │
+│                         [Cancel] [Create Meal]   │
+└──────────────────────────────────────────────────┘
+
+
+
+==========================================================
+
+
+==========================================================
+                CAUTION (VERY IMPORTANT)
+You are not allowed to Modify the Backend Code.You can just read it.
+==========================================================
+
+I am also providing you two files that describe what each endpoint is doing , so you can understand the Backend in a better way.

@@ -17,11 +17,11 @@ public interface NotificationRepository extends JpaRepository<Notification, UUID
 
     Page<Notification> findByUserIdOrderByCreatedAtDesc(UUID userId, Pageable pageable);
 
-    List<Notification> findByUserIdAndReadFalseOrderByCreatedAtDesc(UUID userId);
+    List<Notification> findByUserIdAndReadedFalseOrderByCreatedAtDesc(UUID userId);
 
-    long countByUserIdAndReadFalse(UUID userId);
+    long countByUserIdAndReadedFalse(UUID userId);
 
     @Modifying
-    @Query("update Notification n set n.read = true where n.user.id = :userId and n.read = false")
-    int markAllAsReadForUser(@Param("userId") UUID userId);
+    @Query("update Notification n set n.readed = true where n.user.id = :userId and n.readed = false")
+    int markAllAsReadedForUser(@Param("userId") UUID userId);
 }
